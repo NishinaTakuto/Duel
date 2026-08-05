@@ -1,178 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>カードテーブル</title>
 
-<title>カードテーブル</title>
-
-<style>
-body {
-  margin: 0;
-  background: #0b6b2d;
-  overflow: hidden;
-}
-
-#table {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-}
-
-.card {
-  width: 80px;
-  height: 120px;
-  border: 2px solid black;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  position: absolute;
-  user-select: none;
-  touch-action: none;
-  cursor: grab;
-}
-
-.back {
-  background: navy;
-  color: white;
-}
-
-.front {
-  background: white;
-  color: black;
-}
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div id="table"></div>
+    <div id="table"></div>
 
-<script>
-const table = document.getElementById("table");
-
-let highestZ = 100;
-
-// 山札
-const deck = [];
-
-// 40枚追加
-for (let i = 1; i <= 40; i++) {
-  deck.push({
-    id: i,
-    faceUp: true
-  });
-}
-
-// シャッフル
-deck.sort(() => Math.random() - 0.5);
-
-// 山札表示
-const deckView = document.createElement("div");
-deckView.className = "card back";
-deckView.style.left = "50px";
-deckView.style.top = "50px";
-
-table.appendChild(deckView);
-
-updateDeckView();
-
-function updateDeckView() {
-  deckView.textContent = "🂠 " + deck.length;
-}
-
-// 山札から引く
-deckView.addEventListener("click", () => {
-
-  if (deck.length === 0) {
-    alert("山札がありません");
-    return;
-  }
-
-  const cardData = deck.pop();
-
-  createCard(cardData);
-
-  updateDeckView();
-});
-
-// カード生成
-function createCard(cardData) {
-
-  const card = document.createElement("div");
-
-  card.className = "card front";
-
-  card.textContent = cardData.id;
-
-  card.dataset.faceUp = "true";
-
-  card.style.left = "180px";
-  card.style.top = "60px";
-
-  card.style.zIndex = ++highestZ;
-
-  // 表裏切り替え
-  card.addEventListener("click", (e) => {
-
-    e.stopPropagation();
-
-    const faceUp = card.dataset.faceUp === "true";
-
-    if (faceUp) {
-      card.dataset.faceUp = "false";
-      card.className = "card back";
-      card.textContent = "🂠";
-    } else {
-      card.dataset.faceUp = "true";
-      card.className = "card front";
-      card.textContent = cardData.id;
-    }
-  });
-
-  makeDraggable(card);
-
-  table.appendChild(card);
-}
-
-// ドラッグ機能
-function makeDraggable(card) {
-
-  let dragging = false;
-  let offsetX = 0;
-  let offsetY = 0;
-
-  card.addEventListener("pointerdown", (e) => {
-
-    dragging = true;
-
-    card.style.zIndex = ++highestZ;
-
-    offsetX = e.clientX - card.offsetLeft;
-    offsetY = e.clientY - card.offsetTop;
-
-    card.setPointerCapture(e.pointerId);
-  });
-
-  card.addEventListener("pointermove", (e) => {
-
-    if (!dragging) return;
-
-    card.style.left =
-      (e.clientX - offsetX) + "px";
-
-    card.style.top =
-      (e.clientY - offsetY) + "px";
-  });
-
-  card.addEventListener("pointerup", () => {
-    dragging = false;
-  });
-}
-</script>
+    <script src="script.js"></script>
 
 </body>
 </html>
