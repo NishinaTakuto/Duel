@@ -275,41 +275,11 @@ function isOverlapping(rect1, rect2) {
 
 function setupCardEvents(card) {
 
-    setupCardFlip(card);
-
-    setupCardRotate(card);
+    setupCardTap(card);
 
     setupCardLongPress(card);
 }
 
-function setupCardFlip(card) {
-
-    card.addEventListener("click", (e) => {
-
-        e.stopPropagation();
-
-        const faceUp =
-            card.dataset.faceUp === "true";
-
-        if (faceUp) {
-
-            card.dataset.faceUp = "false";
-
-            card.className = "card back";
-
-            card.textContent = "🂠";
-
-        } else {
-
-            card.dataset.faceUp = "true";
-
-            card.className = "card front";
-
-            card.textContent =
-                card.cardData.id;
-        }
-    });
-}
 
 function toggleRotate(card) {
 
@@ -332,20 +302,51 @@ function toggleRotate(card) {
     }
 }
 
-function setupCardRotate(card) {
+function setupCardTap(card) {
 
-    let lastTap = 0;
+    let tapTimer = null;
 
-    card.addEventListener("pointerup", () => {
+    card.addEventListener("click", (e) => {
 
-        const now = Date.now();
+        e.stopPropagation();
 
-        if (now - lastTap < 300) {
+        if (tapTimer) {
+
+            clearTimeout(tapTimer);
+
+            tapTimer = null;
 
             toggleRotate(card);
+
+            return;
         }
 
-        lastTap = now;
+        tapTimer = setTimeout(() => {
+
+            const faceUp =
+                card.dataset.faceUp === "true";
+
+            if (faceUp) {
+
+                card.dataset.faceUp = "false";
+
+                card.className = "card back";
+
+                card.textContent = "🂠";
+
+            } else {
+
+                card.dataset.faceUp = "true";
+
+                card.className = "card front";
+
+                card.textContent =
+                    card.cardData.id;
+            }
+
+            tapTimer = null;
+
+        }, 300);
     });
 }
 
