@@ -381,8 +381,21 @@ function toggleRotate(card) {
 function setupCardTap(card) {
 
     let tapTimer = null;
+    let moved = false;
+
+    card.addEventListener("pointerdown", () => {
+
+        moved = false;
+    });
+
+    card.addEventListener("pointermove", () => {
+
+        moved = true;
+    });
 
     card.addEventListener("click", (e) => {
+
+        if (moved) return;
 
         e.stopPropagation();
 
