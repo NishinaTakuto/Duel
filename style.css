@@ -66,3 +66,50 @@ body {
 
     pointer-events: none;
 }
+
+#card-preview {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,0.5);
+
+    z-index: 99999;
+}
+
+#preview-card {
+    width: 240px;
+    height: 360px;
+
+    border: 4px solid black;
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 72px;
+    font-weight: bold;
+}
+
+#close-preview {
+    position: absolute;
+
+    top: 20px;
+    right: 20px;
+
+    width: 60px;
+    height: 60px;
+
+    border: none;
+    border-radius: 50%;
+
+    font-size: 32px;
+
+    cursor: pointer;
+}

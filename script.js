@@ -352,35 +352,37 @@ function setupCardRotate(card) {
 function setupCardLongPress(card) {
 
     let timer = null;
+    let moved = false;
 
     card.addEventListener("pointerdown", () => {
 
+        moved = false;
+
         timer = setTimeout(() => {
 
-            showCardPreview(card);
+            if (!moved) {
+
+                showCardPreview(card);
+            }
 
         }, 500);
+    });
+
+    card.addEventListener("pointermove", () => {
+
+        moved = true;
+
+        clearTimeout(timer);
     });
 
     card.addEventListener("pointerup", () => {
 
         clearTimeout(timer);
-
-        hideCardPreview();
-    });
-
-    card.addEventListener("pointerleave", () => {
-
-        clearTimeout(timer);
-
-        hideCardPreview();
     });
 
     card.addEventListener("pointercancel", () => {
 
         clearTimeout(timer);
-
-        hideCardPreview();
     });
 }
 
@@ -395,14 +397,32 @@ function showCardPreview(card) {
 
         preview.id = "card-preview";
 
+        preview.innerHTML = `
+            <button id="close-preview">
+                ×
+            </button>
+
+            <div id="preview-card"></div>
+        `;
+
         document.body.appendChild(preview);
+
+        document
+            .getElementById("close-preview")
+            .addEventListener("click", () => {
+
+                hideCardPreview();
+            });
     }
 
     preview.style.display = "flex";
 
-    preview.className = card.className;
+    const previewCard =
+        document.getElementById("preview-card");
 
-    preview.textContent = card.textContent;
+    previewCard.className = card.className;
+
+    previewCard.textContent = card.textContent;
 }
 
 function hideCardPreview() {
