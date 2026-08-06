@@ -278,6 +278,8 @@ function setupCardEvents(card) {
     setupCardFlip(card);
 
     setupCardRotate(card);
+
+    setupCardLongPress(card);
 }
 
 function setupCardFlip(card) {
@@ -345,4 +347,71 @@ function setupCardRotate(card) {
 
         lastTap = now;
     });
+}
+
+function setupCardLongPress(card) {
+
+    let timer = null;
+
+    card.addEventListener("pointerdown", () => {
+
+        timer = setTimeout(() => {
+
+            showCardPreview(card);
+
+        }, 500);
+    });
+
+    card.addEventListener("pointerup", () => {
+
+        clearTimeout(timer);
+
+        hideCardPreview();
+    });
+
+    card.addEventListener("pointerleave", () => {
+
+        clearTimeout(timer);
+
+        hideCardPreview();
+    });
+
+    card.addEventListener("pointercancel", () => {
+
+        clearTimeout(timer);
+
+        hideCardPreview();
+    });
+}
+
+function showCardPreview(card) {
+
+    let preview =
+        document.getElementById("card-preview");
+
+    if (!preview) {
+
+        preview = document.createElement("div");
+
+        preview.id = "card-preview";
+
+        document.body.appendChild(preview);
+    }
+
+    preview.style.display = "flex";
+
+    preview.className = card.className;
+
+    preview.textContent = card.textContent;
+}
+
+function hideCardPreview() {
+
+    const preview =
+        document.getElementById("card-preview");
+
+    if (preview) {
+
+        preview.style.display = "none";
+    }
 }
