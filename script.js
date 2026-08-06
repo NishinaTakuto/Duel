@@ -7,8 +7,11 @@ const CONFIG = {
     DECK2_RIGHT: 100,
     DECK2_BOTTOM: 150,
 
-    CARD_WIDTH: 80,
-    CARD_HEIGHT: 120
+    CARD_WIDTH: 40,
+    CARD_HEIGHT: 60,
+
+    DECK_WIDTH: 80,
+    DECK_HEIGHT: 120
 };
 
 const table = document.getElementById("table");
@@ -37,22 +40,36 @@ gameState.deck2.sort(() => Math.random() - 0.5);
 // 左上の山札
 const deckView1 = document.createElement("div");
 deckView1.className = "card back";
+
 deckView1.style.left = CONFIG.DECK1_X + "px";
 deckView1.style.top = CONFIG.DECK1_Y + "px";
+
+deckView1.style.width =
+    CONFIG.CARD_WIDTH + "px";
+
+deckView1.style.height =
+    CONFIG.CARD_HEIGHT + "px";
 
 table.appendChild(deckView1);
 
 // 右下の山札
 const deckView2 = document.createElement("div");
 deckView2.className = "card back";
+
 deckView2.style.right = CONFIG.DECK2_RIGHT + "px";
 deckView2.style.bottom = CONFIG.DECK2_BOTTOM + "px";
+
+deckView2.style.width =
+    CONFIG.CARD_WIDTH + "px";
+
+deckView2.style.height =
+    CONFIG.CARD_HEIGHT + "px";
 
 table.appendChild(deckView2);
 
 function updateDeckViews() {
-    deckView1.textContent = "🂠 " + gameState.deck1.length;
-    deckView2.textContent = "🂠 " + gameState.deck2.length;
+    deckView1.textContent = gameState.deck1.length;
+    deckView2.textContent = gameState.deck2.length;
 }
 
 updateDeckViews();
@@ -107,6 +124,12 @@ function createCard(cardData, startX, startY) {
 
     card.style.left = startX + "px";
     card.style.top = startY + "px";
+
+    card.style.width =
+        CONFIG.CARD_WIDTH + "px";
+
+    card.style.height =
+        CONFIG.CARD_HEIGHT + "px";
 
     card.style.zIndex = ++highestZ;
 
