@@ -1,11 +1,11 @@
 const CONFIG = {
     DECK_SIZE: 40,
 
-    DECK1_X: 100,
-    DECK1_Y: 150,
+    DECK1_X: 50,
+    DECK1_Y: 75,
 
-    DECK2_RIGHT: 100,
-    DECK2_BOTTOM: 150,
+    DECK2_RIGHT: 50,
+    DECK2_BOTTOM: 75,
 
     CARD_WIDTH: 40,
     CARD_HEIGHT: 60,
@@ -246,8 +246,8 @@ function startDragging(card) {
 
     let dragging = true;
 
-    const offsetX = 40;
-    const offsetY = 60;
+    const offsetX = CONFIG.CARD_WIDTH / 2;
+    const offsetY = CONFIG.CARD_HEIGHT / 2;
 
     function moveHandler(ev) {
 
