@@ -1,3 +1,27 @@
+function updateDeckTotal() {
+
+    let total = 0;
+
+    document
+        .querySelectorAll(
+            ".card-count"
+        )
+        .forEach(label => {
+
+            total += Number(
+                label.textContent
+            );
+        });
+
+    deck1Total.textContent =
+        `現在 ${total} / 40枚`;
+}
+
+const deck1Total =
+    document.getElementById(
+        "deck1-total"
+    );
+
 const deck1Files =
     document.getElementById(
         "deck1-files"
@@ -30,9 +54,9 @@ deck1Files.addEventListener(
             image.src =
                 URL.createObjectURL(file);
 
-            image.width = 80;
+            image.width = 48;
 
-            image.height = 120;
+            image.height = 72;
 
             const fileName =
                 document.createElement("div");
@@ -59,12 +83,28 @@ deck1Files.addEventListener(
             const countLabel =
                 document.createElement("span");
 
+            countLabel.className =
+                "card-count";
+
             countLabel.textContent = count;
 
             const plusButton =
                 document.createElement("button");
 
             plusButton.textContent = "+";
+
+            minusButton.style.width = "30px";
+            minusButton.style.height = "30px";
+            minusButton.style.fontSize = "18px";
+
+            plusButton.style.width = "30px";
+            plusButton.style.height = "30px";
+            plusButton.style.fontSize = "18px";
+
+            countLabel.style.fontSize = "20px";
+            countLabel.style.fontWeight = "bold";
+            countLabel.style.minWidth = "20px";
+            countLabel.style.textAlign = "center";
 
             minusButton.addEventListener(
                 "click",
@@ -76,6 +116,8 @@ deck1Files.addEventListener(
 
                     countLabel.textContent =
                         count;
+
+                    updateDeckTotal();
                 }
             );
 
@@ -89,6 +131,8 @@ deck1Files.addEventListener(
 
                     countLabel.textContent =
                         count;
+
+                    updateDeckTotal();
                 }
             );
 
@@ -113,6 +157,8 @@ deck1Files.addEventListener(
             cardRow.appendChild(countArea);
 
             deck1List.appendChild(cardRow);
+
+            updateDeckTotal();
         });
     }
 );
