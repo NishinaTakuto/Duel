@@ -8,11 +8,26 @@ const CONFIG = {
     DECK2_BOTTOM: 75,
 
     CARD_WIDTH: 40,
-    CARD_HEIGHT: 60,
-
-    DECK_WIDTH: 80,
-    DECK_HEIGHT: 120
+    CARD_HEIGHT: 60
 };
+
+function shuffleDeck(deck) {
+
+    for (
+        let i = deck.length - 1;
+        i > 0;
+        i--
+    ) {
+
+        const j =
+            Math.floor(
+                Math.random() * (i + 1)
+            );
+
+        [deck[i], deck[j]] =
+            [deck[j], deck[i]];
+    }
+}
 
 const table = document.getElementById("table");
 
@@ -34,8 +49,8 @@ for (let i = 41; i <= 80; i++) {
 }
 
 // シャッフル
-gameState.deck1.sort(() => Math.random() - 0.5);
-gameState.deck2.sort(() => Math.random() - 0.5);
+shuffleDeck(gameState.deck1);
+shuffleDeck(gameState.deck2);
 
 // 左上の山札
 const deckView1 = document.createElement("div");
@@ -52,6 +67,25 @@ deckView1.style.height =
 
 table.appendChild(deckView1);
 
+const shuffleButton1 =
+    document.createElement("button");
+
+shuffleButton1.textContent = "🔀";
+
+shuffleButton1.style.position = "absolute";
+shuffleButton1.style.width = "45px";
+shuffleButton1.style.height = "20px";
+shuffleButton1.style.fontSize = "10px";
+
+shuffleButton1.style.left =
+    CONFIG.DECK1_X + "px";
+
+shuffleButton1.style.top =
+    (CONFIG.DECK1_Y +
+    CONFIG.CARD_HEIGHT + 10) + "px";
+
+table.appendChild(shuffleButton1);
+
 // 右下の山札
 const deckView2 = document.createElement("div");
 deckView2.className = "card back";
@@ -66,6 +100,25 @@ deckView2.style.height =
     CONFIG.CARD_HEIGHT + "px";
 
 table.appendChild(deckView2);
+
+const shuffleButton2 =
+    document.createElement("button");
+
+shuffleButton2.textContent = "🔀";
+
+shuffleButton2.style.position = "absolute";
+shuffleButton2.style.width = "45px";
+shuffleButton2.style.height = "20px";
+shuffleButton2.style.fontSize = "10px";
+
+shuffleButton2.style.right =
+    CONFIG.DECK2_RIGHT + "px";
+
+shuffleButton2.style.bottom =
+    (CONFIG.DECK2_BOTTOM +
+    CONFIG.CARD_HEIGHT + 10) + "px";
+
+table.appendChild(shuffleButton2);
 
 function updateDeckViews() {
     deckView1.textContent = gameState.deck1.length;
@@ -467,3 +520,23 @@ function hideCardPreview() {
         preview.style.display = "none";
     }
 }
+
+shuffleButton1.addEventListener(
+    "click",
+    () => {
+
+        shuffleDeck(
+            gameState.deck1
+        );
+    }
+);
+
+shuffleButton2.addEventListener(
+    "click",
+    () => {
+
+        shuffleDeck(
+            gameState.deck2
+        );
+    }
+);
