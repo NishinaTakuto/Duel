@@ -48,12 +48,32 @@ const gameState = {
 };
 
 // カード生成
-for (let i = 1; i <= 40; i++) {
-    gameState.deck1.push({ id: i });
+if (
+    gameState.deck1.length === 0
+) {
+
+    for (
+        let i = 1;
+        i <= 40;
+        i++
+    ) {
+
+        gameState.deck1.push({
+            id: i
+        });
+    }
 }
 
-for (let i = 41; i <= 80; i++) {
-    gameState.deck2.push({ id: i });
+const savedDeck =
+    sessionStorage.getItem(
+        "deck1"
+    );
+
+if (savedDeck) {
+
+    gameState.deck1 =
+        JSON.parse(savedDeck);
+
 }
 
 // シャッフル
@@ -176,7 +196,32 @@ function createCard(cardData, startX, startY) {
     const card = document.createElement("div");
 
     card.className = "card front";
-    card.textContent = cardData.id;
+
+    if (cardData.image) {
+
+        const img =
+            document.createElement("img");
+
+        img.src =
+            cardData.image;
+
+        img.style.width = "100%";
+
+        img.style.height = "100%";
+
+        img.style.objectFit =
+            "cover";
+
+        img.style.pointerEvents =
+            "none";
+
+        card.appendChild(img);
+
+    } else {
+
+        card.textContent =
+            cardData.id;
+    }
 
     card.cardData = cardData;
 
@@ -461,7 +506,11 @@ function setupCardTap(card) {
 
                 card.dataset.faceUp = "false";
 
+                card.dataset.faceUp = "false";
+
                 card.className = "card back";
+
+                card.innerHTML = "";
 
                 card.textContent = "🂠";
 
@@ -471,8 +520,33 @@ function setupCardTap(card) {
 
                 card.className = "card front";
 
-                card.textContent =
-                    card.cardData.id;
+                card.innerHTML = "";
+
+                if (card.cardData.image) {
+
+                    const img =
+                        document.createElement("img");
+
+                    img.src =
+                        card.cardData.image;
+
+                    img.style.width = "100%";
+
+                    img.style.height = "100%";
+
+                    img.style.objectFit =
+                        "cover";
+
+                    img.style.pointerEvents =
+                        "none";
+
+                    card.appendChild(img);
+
+                } else {
+
+                    card.textContent =
+                        card.cardData.id;
+                }
             }
 
             tapTimer = null;

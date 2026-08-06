@@ -1,3 +1,10 @@
+const deck1Cards = [];
+
+const startGameButton =
+    document.getElementById(
+        "start-game"
+    );
+
 function updateDeckTotal() {
 
     let total = 0;
@@ -15,6 +22,23 @@ function updateDeckTotal() {
 
     deck1Total.textContent =
         `現在 ${total} / 40枚`;
+
+    if (total === 40) {
+
+        deck1Total.style.color =
+            "green";
+
+        startGameButton.disabled =
+            false;
+
+    } else {
+
+        deck1Total.style.color =
+            "red";
+
+        startGameButton.disabled =
+            true;
+    }
 }
 
 const deck1Total =
@@ -71,11 +95,27 @@ deck1Files.addEventListener(
                 "click",
                 () => {
 
+                    const index =
+                        deck1Cards.indexOf(cardInfo);
+
+                    if (index >= 0) {
+
+                        deck1Cards.splice(index, 1);
+                    }
+
                     cardRow.remove();
 
                     updateDeckTotal();
                 }
             );
+
+            const cardInfo = {
+                file: file,
+                count: 4
+            };
+
+            deck1Cards.push(cardInfo);
+
 
             /* 枚数 */
 
@@ -127,6 +167,8 @@ deck1Files.addEventListener(
 
                     count--;
 
+                    cardInfo.count = count;
+
                     countLabel.textContent =
                         count;
 
@@ -141,6 +183,8 @@ deck1Files.addEventListener(
                     if (count >= 4) return;
 
                     count++;
+
+                    cardInfo.count = count;
 
                     countLabel.textContent =
                         count;
@@ -173,5 +217,67 @@ deck1Files.addEventListener(
 
             updateDeckTotal();
         });
+    }
+);
+
+function fileToBase64(file) {
+
+    return new Promise(
+        resolve => {
+
+            const reader =
+                new FileReader();
+
+            reader.onload = () => {
+
+                resolve(
+                    reader.result
+                );
+            };
+
+            reader.readAsDataURL(
+                file
+            );
+        }
+    );
+}
+
+startGameButton.addEventListener(
+    "click",
+    async () => {
+
+        const deck = [];
+
+        for (
+            const cardInfo
+            of deck1Cards
+        ) {
+
+            const image =
+                await fileToBase64(
+                    cardInfo.file
+                );
+
+            for (
+                let i = 0;
+                i < cardInfo.count;
+                i++
+            ) {
+
+                deck.push({
+                    image: image
+                });
+            }
+        }
+
+        console.log(deck);
+
+        sessionStorage.setItem(
+            "deck1",
+            JSON.stringify(deck)
+        );
+
+        location.href =
+            "index.html";
     }
 );
