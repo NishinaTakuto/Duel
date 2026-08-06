@@ -54,15 +54,28 @@ deck1Files.addEventListener(
             image.src =
                 URL.createObjectURL(file);
 
-            image.width = 48;
+            image.width = 80;
 
-            image.height = 72;
+            image.height = 120;
 
-            const fileName =
-                document.createElement("div");
+            const deleteButton =
+                document.createElement("button");
 
-            fileName.textContent =
-                file.name;
+            deleteButton.textContent = "×";
+
+            deleteButton.style.color = "red";
+
+            deleteButton.style.fontSize = "16px";
+
+            deleteButton.addEventListener(
+                "click",
+                () => {
+
+                    cardRow.remove();
+
+                    updateDeckTotal();
+                }
+            );
 
             /* 枚数 */
 
@@ -152,9 +165,9 @@ deck1Files.addEventListener(
 
             cardRow.appendChild(image);
 
-            cardRow.appendChild(fileName);
-
             cardRow.appendChild(countArea);
+
+            cardRow.appendChild(deleteButton);
 
             deck1List.appendChild(cardRow);
 
