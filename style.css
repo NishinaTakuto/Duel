@@ -43,33 +43,6 @@ body {
 #card-preview {
     position: fixed;
 
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    width: 240px;
-    height: 360px;
-
-    border: 4px solid black;
-    border-radius: 20px;
-
-    display: none;
-
-    justify-content: center;
-    align-items: center;
-
-    font-size: 72px;
-    font-weight: bold;
-
-    z-index: 99999;
-
-    pointer-events: none;
-}
-
-#card-preview {
-    position: fixed;
-
     inset: 0;
 
     display: none;
@@ -95,6 +68,8 @@ body {
 
     font-size: 72px;
     font-weight: bold;
+
+    background: white;
 }
 
 #close-preview {

@@ -420,9 +420,17 @@ function showCardPreview(card) {
     const previewCard =
         document.getElementById("preview-card");
 
-    previewCard.className = card.className;
+    previewCard.textContent =
+        card.textContent;
 
-    previewCard.textContent = card.textContent;
+    if (card.classList.contains("back")) {
+
+        previewCard.className = "back";
+
+    } else {
+
+        previewCard.className = "front";
+    }
 }
 
 function hideCardPreview() {
