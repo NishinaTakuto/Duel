@@ -242,13 +242,21 @@ function makeDraggable(card) {
 
     if (isOverlapping(cardRect, deck1Rect)) {
 
-        const isTop =
-            confirm("OK:山札の上\nキャンセル:山札の下");
+        const choice = prompt(
+            "1:山札の上\n2:山札の下\n3:キャンセル"
+        );
 
-        if (isTop) {
+        if (choice === "1") {
+
             gameState.deck1.push(card.cardData);
-        } else {
+
+        } else if (choice === "2") {
+
             gameState.deck1.unshift(card.cardData);
+
+        } else {
+
+            return;
         }
 
         gameState.fieldCards =
@@ -266,13 +274,21 @@ function makeDraggable(card) {
 
     if (isOverlapping(cardRect, deck2Rect)) {
 
-        const isTop =
-            confirm("OK:山札の上\nキャンセル:山札の下");
+        const choice = prompt(
+            "1:山札の上\n2:山札の下\n3:キャンセル"
+        );
 
-        if (isTop) {
+        if (choice === "1") {
+
             gameState.deck2.push(card.cardData);
-        } else {
+
+        } else if (choice === "2") {
+
             gameState.deck2.unshift(card.cardData);
+
+        } else {
+
+            return;
         }
 
         gameState.fieldCards =
