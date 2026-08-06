@@ -2,11 +2,12 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <title>カードテーブル</title>
+    <title>デッキ設定</title>
 
     <link
         rel="stylesheet"
@@ -15,13 +16,19 @@
 
 <body>
 
-    <button id="settings-button">
-        デッキ設定
-    </button>
+    <h1>デッキ設定</h1>
 
-    <div id="table"></div>
+    <h2>デッキ1</h2>
 
-    <script src="script.js"></script>
+    <input
+        type="file"
+        id="deck1-files"
+        multiple
+        accept="image/*">
+
+    <div id="deck1-list"></div>
+
+    <script src="settings.js"></script>
 
 </body>
 </html>

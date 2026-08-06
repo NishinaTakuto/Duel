@@ -1,3 +1,11 @@
+document
+    .getElementById("settings-button")
+    .addEventListener("click", () => {
+
+        location.href =
+            "settings.html";
+    });
+
 const CONFIG = {
     DECK_SIZE: 40,
 

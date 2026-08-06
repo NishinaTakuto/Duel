@@ -118,3 +118,29 @@ body {
 
     font-size: 18px;
 }
+
+#deck1-list {
+    margin-top: 20px;
+}
+
+#deck1-list div {
+    margin-bottom: 15px;
+}
+
+#deck1-list img {
+    border: 1px solid black;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+#deck1-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin-top: 16px;
+}
