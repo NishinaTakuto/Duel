@@ -242,31 +242,40 @@ function makeDraggable(card) {
 
     if (isOverlapping(cardRect, deck1Rect)) {
 
-        const choice = prompt(
-            "1:山札の上\n2:山札の下\n3:キャンセル"
+        showDeckMenu(
+
+            () => {
+
+                gameState.deck1.push(
+                    card.cardData
+                );
+
+                gameState.fieldCards =
+                    gameState.fieldCards.filter(
+                        c => c.element !== card
+                    );
+
+                card.remove();
+
+                updateDeckViews();
+            },
+
+            () => {
+
+                gameState.deck1.unshift(
+                    card.cardData
+                );
+
+                gameState.fieldCards =
+                    gameState.fieldCards.filter(
+                        c => c.element !== card
+                    );
+
+                card.remove();
+
+                updateDeckViews();
+            }
         );
-
-        if (choice === "1") {
-
-            gameState.deck1.push(card.cardData);
-
-        } else if (choice === "2") {
-
-            gameState.deck1.unshift(card.cardData);
-
-        } else {
-
-            return;
-        }
-
-        gameState.fieldCards =
-            gameState.fieldCards.filter(
-                c => c.element !== card
-            );
-
-        card.remove();
-
-        updateDeckViews();
 
         return;
     }
@@ -274,31 +283,40 @@ function makeDraggable(card) {
 
     if (isOverlapping(cardRect, deck2Rect)) {
 
-        const choice = prompt(
-            "1:山札の上\n2:山札の下\n3:キャンセル"
+        showDeckMenu(
+
+            () => {
+
+                gameState.deck2.push(
+                    card.cardData
+                );
+
+                gameState.fieldCards =
+                    gameState.fieldCards.filter(
+                        c => c.element !== card
+                    );
+
+                card.remove();
+
+                updateDeckViews();
+            },
+
+            () => {
+
+                gameState.deck2.unshift(
+                    card.cardData
+                );
+
+                gameState.fieldCards =
+                    gameState.fieldCards.filter(
+                        c => c.element !== card
+                    );
+
+                card.remove();
+
+                updateDeckViews();
+            }
         );
-
-        if (choice === "1") {
-
-            gameState.deck2.push(card.cardData);
-
-        } else if (choice === "2") {
-
-            gameState.deck2.unshift(card.cardData);
-
-        } else {
-
-            return;
-        }
-
-        gameState.fieldCards =
-            gameState.fieldCards.filter(
-                c => c.element !== card
-            );
-
-        card.remove();
-
-        updateDeckViews();
 
         return;
     }
@@ -569,3 +587,61 @@ shuffleButton2.addEventListener(
         );
     }
 );
+
+function showDeckMenu(onTop, onBottom) {
+
+    let menu =
+        document.getElementById("deck-menu");
+
+    if (!menu) {
+
+        menu = document.createElement("div");
+
+        menu.id = "deck-menu";
+
+        menu.innerHTML = `
+            <div id="deck-menu-box">
+
+                <button id="deck-top">
+                    山札の上へ
+                </button>
+
+                <button id="deck-bottom">
+                    山札の下へ
+                </button>
+
+                <button id="deck-cancel">
+                    キャンセル
+                </button>
+
+            </div>
+        `;
+
+        document.body.appendChild(menu);
+    }
+
+    menu.style.display = "flex";
+
+    document.getElementById(
+        "deck-top"
+    ).onclick = () => {
+
+        menu.style.display = "none";
+        onTop();
+    };
+
+    document.getElementById(
+        "deck-bottom"
+    ).onclick = () => {
+
+        menu.style.display = "none";
+        onBottom();
+    };
+
+    document.getElementById(
+        "deck-cancel"
+    ).onclick = () => {
+
+        menu.style.display = "none";
+    };
+}
