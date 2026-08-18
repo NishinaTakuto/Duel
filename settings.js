@@ -267,12 +267,22 @@ startGameButton.addEventListener(
             });
         }
 
-        console.log(deck);
+        try {
 
-        sessionStorage.setItem(
-            "deck1",
-            JSON.stringify(deck)
-        );
+            sessionStorage.setItem(
+                "deck1",
+                JSON.stringify(deck)
+            );
+
+            alert("保存成功");
+
+        } catch (e) {
+
+            alert(
+                "保存失敗\n" +
+                e.message
+            );
+        }
 
         location.href =
             "index.html";
