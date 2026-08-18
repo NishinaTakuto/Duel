@@ -258,16 +258,13 @@ startGameButton.addEventListener(
                     cardInfo.file
                 );
 
-            for (
-                let i = 0;
-                i < cardInfo.count;
-                i++
-            ) {
+            deck.push({
 
-                deck.push({
-                    image: image
-                });
-            }
+                image: image,
+
+                count:
+                    cardInfo.count
+            });
         }
 
         console.log(deck);
