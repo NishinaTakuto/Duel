@@ -1,10 +1,28 @@
-document
-    .getElementById("settings-button")
-    .addEventListener("click", () => {
+const settingsScreen =
+    document.getElementById(
+        "settings-screen"
+    );
 
-        location.href =
-            "settings.html";
-    });
+const gameScreen =
+    document.getElementById(
+        "game-screen"
+    );
+
+document
+    .getElementById(
+        "open-settings"
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            gameScreen.style.display =
+                "none";
+
+            settingsScreen.style.display =
+                "block";
+        }
+    );
 
 const CONFIG = {
     DECK_SIZE: 40,
@@ -46,35 +64,6 @@ const gameState = {
     deck2: [],
     fieldCards: []
 };
-
-// カード生成
-if (
-    gameState.deck1.length === 0
-) {
-
-    for (
-        let i = 1;
-        i <= 40;
-        i++
-    ) {
-
-        gameState.deck1.push({
-            id: i
-        });
-    }
-}
-
-const savedDeck =
-    sessionStorage.getItem(
-        "deck1"
-    );
-
-if (savedDeck) {
-
-    gameState.deck1 =
-        JSON.parse(savedDeck);
-
-}
 
 // シャッフル
 shuffleDeck(gameState.deck1);

@@ -15,13 +15,46 @@
 
 <body>
 
-    <button id="settings-button">
-        デッキ設定
-    </button>
+    <div id="settings-screen">
 
-    <div id="table"></div>
+        <h1>デッキ設定</h1>
 
-    <script src="script.js"></script>
+        <input
+            type="file"
+            id="deck1-files"
+            multiple
+            accept="image/*">
+
+        <div id="deck1-list"></div>
+
+        <div id="deck1-total">
+            現在 0 / 40枚
+        </div>
+
+        <button
+            id="start-game"
+            disabled>
+
+            ゲーム開始
+
+        </button>
+
+    </div>
+
+    <div
+        id="game-screen"
+        style="display:none;">
+
+        <button id="open-settings">
+            デッキ設定
+        </button>
+
+        <div id="table"></div>
+
+    </div>
+
+        <script src="settings.js"></script>
+        <script src="script.js"></script>
 
 </body>
 </html>

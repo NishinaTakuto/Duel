@@ -60,6 +60,10 @@ deck1Files.addEventListener(
     "change",
     () => {
 
+        deck1List.innerHTML = "";
+
+        deck1Cards.length = 0;
+
         Array.from(
             deck1Files.files
         ).forEach(file => {
@@ -220,33 +224,11 @@ deck1Files.addEventListener(
     }
 );
 
-function fileToBase64(file) {
-
-    return new Promise(
-        resolve => {
-
-            const reader =
-                new FileReader();
-
-            reader.onload = () => {
-
-                resolve(
-                    reader.result
-                );
-            };
-
-            reader.readAsDataURL(
-                file
-            );
-        }
-    );
-}
-
 startGameButton.addEventListener(
     "click",
-    async () => {
+    () => {
 
-        const deck = [];
+        gameState.deck1 = [];
 
         for (
             const cardInfo
@@ -254,37 +236,32 @@ startGameButton.addEventListener(
         ) {
 
             const image =
-                await fileToBase64(
+                URL.createObjectURL(
                     cardInfo.file
                 );
 
-            deck.push({
+            for (
+                let i = 0;
+                i < cardInfo.count;
+                i++
+            ) {
 
-                image: image,
-
-                count:
-                    cardInfo.count
-            });
+                gameState.deck1.push({
+                    image: image
+                });
+            }
         }
 
-        try {
+        shuffleDeck(
+            gameState.deck1
+        );
 
-            sessionStorage.setItem(
-                "deck1",
-                JSON.stringify(deck)
-            );
+        updateDeckViews();
 
-            alert("保存成功");
+        settingsScreen.style.display =
+            "none";
 
-        } catch (e) {
-
-            alert(
-                "保存失敗\n" +
-                e.message
-            );
-        }
-
-        location.href =
-            "index.html";
+        gameScreen.style.display =
+            "block";
     }
 );
